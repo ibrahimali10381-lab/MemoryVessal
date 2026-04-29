@@ -15,8 +15,8 @@ color cloudShadow = #D8EEF6;
 color boatHull    = #E8DDB5;
 color boatLine    = #8B6040;
 
-float horizon  = 310;   // where sky meets sea
-float shoreTop = 420;   // where ocean meets sand
+float horizon  = 310;  
+float shoreTop = 420;   
 
 // ── Setup ──────────────────────────────────────────────────────
 void setup() {
@@ -31,12 +31,12 @@ void draw() {
   drawIsland(200, 280);     // rocky island mid-left
   drawBoat(320, 305);       // small boat floating in the bay
   drawFoam();               // gentle wave line at shore
-  drawCloud(140, 110, 110); // large cloud top-left
-  drawCloud(370, 145,  80); // small cloud centre
-  drawCloud(620,  90, 130); // large cloud right
-  drawPalmTree(790, 590, 220, -0.15);  // tall tree, right side
-  drawPalmTree(870, 560, 170,  0.10);  // shorter tree, far right
-  drawPalmTree(840, 520, 130, -0.25);  // leaning tree background
+  drawCloud(140, 110, 110); 
+  drawCloud(370, 145,  80); 
+  drawCloud(620,  90, 130); 
+  drawPalmTree(790, 590, 220, -0.15);  
+  drawPalmTree(870, 560, 170,  0.10);  
+  drawPalmTree(840, 520, 130, -0.25);  
 }
 
 // ── Sky: vertical gradient from deep blue (top) to pale (horizon) ──
