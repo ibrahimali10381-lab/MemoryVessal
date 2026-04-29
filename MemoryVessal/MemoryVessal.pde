@@ -1,21 +1,20 @@
 // ── Palette ────────────────────────────────────────────────────
 color sand        = #F5C96A;
-color skyTop      = #5AABDE;   // deeper blue at the zenith
-color skyBottom   = #C2E8F7;   // pale haze near the horizon
-color oceanDeep   = #1E7EA1;   // dark teal far water
-color oceanShallow= #4FBACF;   // lighter near shore
-color foam        = #E8F6FA;   // wave foam
-color islandRock  = #8B5E3C;   // rocky headland
-color islandGrass = #4B7C2D;   // scrub on top of island
+color skyTop      = #5AABDE;   
+color skyBottom   = #C2E8F7;   
+color oceanDeep   = #1E7EA1;  
+color oceanShallow= #4FBACF;   
+color foam        = #E8F6FA;  
+color islandRock  = #8B5E3C;  
+color islandGrass = #4B7C2D;   
 color trunkColor  = #7A4E2C;
 color leafColor   = #3A7D27;
-color leafLight   = #5CAF3E;   // lighter frond highlight
+color leafLight   = #5CAF3E;   
 color cloudWhite  = #FFFFFF;
-color cloudShadow = #D8EEF6;   // cool underside of cloud
+color cloudShadow = #D8EEF6;  
 color boatHull    = #E8DDB5;
 color boatLine    = #8B6040;
 
-// ── Horizon and shore Y positions ──────────────────────────────
 float horizon  = 310;   // where sky meets sea
 float shoreTop = 420;   // where ocean meets sand
 
@@ -123,7 +122,6 @@ void drawIsland(float x, float y) {
   endShape(CLOSE);
 }
 
-// ── Boat: simple wooden dinghy silhouette ─────────────────────────
 void drawBoat(float x, float y) {
   noStroke();
   // hull
@@ -141,7 +139,6 @@ void drawBoat(float x, float y) {
   noStroke();
 }
 
-// ── Cloud: layered ellipses with a faint shadow base ─────────────
 void drawCloud(float x, float y, float sz) {
   // cool underside shadow
   fill(cloudShadow);
@@ -153,61 +150,4 @@ void drawCloud(float x, float y, float sz) {
   ellipse(x + sz * 0.38, y + sz * 0.08, sz * 0.78, sz * 0.50);
   ellipse(x - sz * 0.30, y + sz * 0.05, sz * 0.65, sz * 0.48);
   ellipse(x + sz * 0.12, y - sz * 0.12, sz * 0.55, sz * 0.45);
-}
-
-// ── Palm tree: leaning trunk + layered fronds ────────────────────
-// lean: negative = leans left, positive = leans right
-void drawPalmTree(float bx, float by, float h, float lean) {
-  strokeWeight(0);
-  noStroke();
-  // trunk (tapered, slightly curved via segments)
-  int segs = 12;
-  for (int i = 0; i < segs; i++) {
-    float t0 = i       / float(segs);
-    float t1 = (i + 1) / float(segs);
-    float x0 = bx + lean * h * t0 * t0;
-    float y0 = by - h * t0;
-    float x1 = bx + lean * h * t1 * t1;
-    float y1 = by - h * t1;
-    float w0 = lerp(14, 5, t0);   // wide at base, narrow at tip
-    fill(lerpColor(#5C3A1E, trunkColor, t0));
-    beginShape();
-      vertex(x0 - w0, y0);
-      vertex(x0 + w0, y0);
-      vertex(x1 + w0 * 0.6, y1);
-      vertex(x1 - w0 * 0.6, y1);
-    endShape(CLOSE);
-  }
-  // tip position after curve
-  float tx = bx + lean * h;
-  float ty = by - h;
-  // fronds radiating from the crown
-  drawFrond(tx, ty,  -80, 100, leafColor);   // left droop
-  drawFrond(tx, ty,  -50,  90, leafColor);
-  drawFrond(tx, ty,  -20,  85, leafLight);   // near-upright, lighter
-  drawFrond(tx, ty,   10,  90, leafColor);
-  drawFrond(tx, ty,   40, 100, leafColor);   // right droop
-  drawFrond(tx, ty,  -140,  70, leafColor);  // rear frond for volume
-  drawFrond(tx, ty,   130,  70, leafColor);
-}
-
-// ── Single palm frond: tapered leaf blade with midrib ─────────────
-void drawFrond(float x, float y, float angleDeg, float len, color c) {
-  pushMatrix();
-  translate(x, y);
-  rotate(radians(angleDeg));
-  // leaf blade
-  fill(c);
-  noStroke();
-  beginShape();
-    vertex(0, 0);
-    vertex(len * 0.25,  -6);
-    vertex(len,          0);
-    vertex(len * 0.25,   6);
-  endShape(CLOSE);
-  // midrib (darker line along centre)
-  stroke(#2A5C18);
-  strokeWeight(0.8);
-  line(0, 0, len, 0);
-  popMatrix();
 }
