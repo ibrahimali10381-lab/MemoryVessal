@@ -1,136 +1,68 @@
-// ── Palette ────────────────────────────────────────────────────
-color sand        = #F5C96A;
-color skyTop      = #5AABDE;   
-color skyBottom   = #C2E8F7;   
-color oceanDeep   = #1E7EA1;  
-color oceanShallow= #4FBACF;   
-color foam        = #E8F6FA;  
-color islandRock  = #8B5E3C;  
-color islandGrass = #4B7C2D;   
-color trunkColor  = #7A4E2C;
-color leafColor   = #3A7D27;
-color leafLight   = #5CAF3E;   
-color cloudWhite  = #FFFFFF;
-color cloudShadow = #D8EEF6;  
-color boatHull    = #E8DDB5;
-color boatLine    = #8B6040;
+// Palllette
+color sand = #FFD16C;
+color lightBlue = #65b2CA;
+color darkBlue = #186690;
+color sky = #A2DAF7;
+color from = lightBlue;
+color wto = darkBlue;
+color interA;
+color interB;
+color foliageColor = #4CAF50;
+color trunkColor = #8B4513;
+color cloudColor = #FFFFFF;
+float cloudMove =150;
+int cloud1 = 150;
+int cloud2 = 350;
+int cloud3 = 600;
 
-float horizon  = 310;  
-float shoreTop = 420;   
-
-// ── Setup ──────────────────────────────────────────────────────
+// Setup
 void setup() {
-  size(900, 600);
+  size(900, 900);
 }
 
-// ── Draw ───────────────────────────────────────────────────────
+
+// Draw
 void draw() {
-  drawSky();
-  drawOcean();
-  drawSand();
-  drawIsland(200, 280);     
-  drawBoat(320, 305);       
-  drawFoam();              
-  drawCloud(140, 110, 110); 
-  drawCloud(370, 145,  80); 
-  drawCloud(620,  90, 130); 
-  drawPalmTree(790, 590, 220, -0.15);  
-  drawPalmTree(870, 560, 170,  0.10);  
-  drawPalmTree(840, 520, 130, -0.25);  
-}
-
-void drawSky() {
-  for (int y = 0; y <= horizon; y++) {
-    float t = y / horizon;
-    color c = lerpColor(skyTop, skyBottom, t);
-    stroke(c);
-    line(0, y, width, y);
-  }
-}
-
-void drawOcean() {
   noStroke();
-  fill(oceanDeep);
-  rect(0, horizon, width, (shoreTop - horizon) * 0.45);
-  for (float y = horizon + (shoreTop - horizon) * 0.45; y < shoreTop; y++) {
-    float t = (y - horizon) / (shoreTop - horizon);
-    color c = lerpColor(oceanDeep, oceanShallow, t);
-    fill(c);
-    rect(0, y, width, 1);
-  }
-  stroke(255, 255, 255, 30);
-  strokeWeight(1);
-  for (int i = 0; i < 8; i++) {
-    float sy = horizon + 30 + i * 10;
-    line(50, sy, 180 + i * 20, sy);
-    line(500 + i * 15, sy, 680 + i * 12, sy);
-  }
-}
+  background(sky);
 
-void drawSand() {
-  noStroke();
   fill(sand);
-  rect(0, shoreTop, width, height - shoreTop);
-  fill(#D4A94F, 80);
-  rect(0, shoreTop, width, 18);
+  rect(0, 450, 900, 450);
+  for (float x = 0; x<= 900; x+= 5) {
+    interA = lerpColor(wto, from, x/450);
+    fill(interA);
+    for (float y = 350; y <= 650; y+= 1) {
+      rect(x, y, 5, 1);
+    }
+  }
+
+  drawCloud(cloudMove, 150, 100, cloud1);
+  drawCloud(cloudMove, 200, 80, cloud2);
+  drawCloud(cloudMove, 120, 120, cloud3);
+
+  drawPalmTree(750, 750);
+  drawPalmTree(850, 680);
+
+  if (cloudMove <= 1000) {
+    cloudMove += 10;
+  } else {
+    cloudMove = -652;
+  }
 }
 
-void drawFoam() {
-  noStroke();
-  fill(foam);
-  ellipse(120, shoreTop + 6, 200, 12);
-  ellipse(420, shoreTop + 5, 260, 10);
-  ellipse(730, shoreTop + 7, 180, 11);
-  fill(255, 255, 255, 120);
-  ellipse(270, shoreTop + 3, 120, 7);
-  ellipse(600, shoreTop + 4, 100, 6);
+
+void drawCloud(float x, float y, float size, int num) {
+  fill(cloudColor);
+  ellipse(num + x, y, size, size * 0.6);
+  ellipse(num +x + size * 0.4, y + size * 0.1, size * 0.8, size * 0.5);
+  ellipse(num + x - size * 0.3, y - size * 0.1, size * 0.7, size * 0.5);
 }
 
-void drawIsland(float x, float y) {
-  fill(islandRock);
-  noStroke();
-  beginShape();
-    vertex(x - 55, y + 25);
-    vertex(x - 40, y);
-    vertex(x - 10, y - 18);
-    vertex(x + 15, y - 22);
-    vertex(x + 50, y - 8);
-    vertex(x + 65, y + 25);
-  endShape(CLOSE);
-  fill(islandGrass);
-  ellipse(x + 5, y - 20, 60, 28);
-  fill(#3D6B22);  
-  ellipse(x - 8, y - 15, 30, 18);
-  fill(0, 0, 0, 30);
-  beginShape();
-    vertex(x + 45, y - 5);
-    vertex(x + 65, y + 25);
-    vertex(x + 30, y + 25);
-  endShape(CLOSE);
-}
-
-void drawBoat(float x, float y) {
-  noStroke();
-  fill(boatHull);
-  beginShape();
-    vertex(x - 22, y);
-    vertex(x + 22, y);
-    vertex(x + 16, y + 9);
-    vertex(x - 16, y + 9);
-  endShape(CLOSE);
-  stroke(boatLine);
-  strokeWeight(1.5);
-  line(x - 22, y, x + 22, y);
-  noStroke();
-}
-
-void drawCloud(float x, float y, float sz) {
-  fill(cloudShadow);
-  ellipse(x,             y + sz * 0.18, sz * 1.1, sz * 0.35);
-  ellipse(x + sz * 0.4,  y + sz * 0.25, sz * 0.8, sz * 0.30);
-  fill(cloudWhite);
-  ellipse(x,             y,             sz,        sz * 0.55);
-  ellipse(x + sz * 0.38, y + sz * 0.08, sz * 0.78, sz * 0.50);
-  ellipse(x - sz * 0.30, y + sz * 0.05, sz * 0.65, sz * 0.48);
-  ellipse(x + sz * 0.12, y - sz * 0.12, sz * 0.55, sz * 0.45);
+void drawPalmTree(float x, float y) {
+  fill(trunkColor);
+  rect(x - 5, y, 10, 150);
+  fill(foliageColor);
+  ellipse(x, y - 10, 60, 40);
+  ellipse(x, y - 30, 80, 50);
+  ellipse(x, y - 50, 100, 60);
 }
