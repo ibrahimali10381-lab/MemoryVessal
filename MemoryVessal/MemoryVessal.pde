@@ -28,9 +28,9 @@ void draw() {
   drawSky();
   drawOcean();
   drawSand();
-  drawIsland(200, 280);     // rocky island mid-left
-  drawBoat(320, 305);       // small boat floating in the bay
-  drawFoam();               // gentle wave line at shore
+  drawIsland(200, 280);     
+  drawBoat(320, 305);       
+  drawFoam();              
   drawCloud(140, 110, 110); 
   drawCloud(370, 145,  80); 
   drawCloud(620,  90, 130); 
@@ -39,7 +39,6 @@ void draw() {
   drawPalmTree(840, 520, 130, -0.25);  
 }
 
-// ── Sky: vertical gradient from deep blue (top) to pale (horizon) ──
 void drawSky() {
   for (int y = 0; y <= horizon; y++) {
     float t = y / horizon;
@@ -49,20 +48,16 @@ void drawSky() {
   }
 }
 
-// ── Ocean: two colour bands + subtle horizontal shimmer ──────────
 void drawOcean() {
   noStroke();
-  // far water (narrow deep-blue band near horizon)
   fill(oceanDeep);
   rect(0, horizon, width, (shoreTop - horizon) * 0.45);
-  // nearer water transitions to a lighter turquoise
   for (float y = horizon + (shoreTop - horizon) * 0.45; y < shoreTop; y++) {
     float t = (y - horizon) / (shoreTop - horizon);
     color c = lerpColor(oceanDeep, oceanShallow, t);
     fill(c);
     rect(0, y, width, 1);
   }
-  // light shimmer streaks across the middle distance
   stroke(255, 255, 255, 30);
   strokeWeight(1);
   for (int i = 0; i < 8; i++) {
@@ -72,21 +67,17 @@ void drawOcean() {
   }
 }
 
-// ── Sand: flat golden fill below the shore ───────────────────────
 void drawSand() {
   noStroke();
   fill(sand);
   rect(0, shoreTop, width, height - shoreTop);
-  // subtle darker band at the wet-sand edge
   fill(#D4A94F, 80);
   rect(0, shoreTop, width, 18);
 }
 
-// ── Ocean foam / wave line where water meets sand ────────────────
 void drawFoam() {
   noStroke();
   fill(foam);
-  // irregular ellipses that mimic a gentle wave
   ellipse(120, shoreTop + 6, 200, 12);
   ellipse(420, shoreTop + 5, 260, 10);
   ellipse(730, shoreTop + 7, 180, 11);
@@ -95,9 +86,7 @@ void drawFoam() {
   ellipse(600, shoreTop + 4, 100, 6);
 }
 
-// ── Island: rocky shape with a green scrub cap ───────────────────
 void drawIsland(float x, float y) {
-  // main rocky mass (rough triangle-ish shape)
   fill(islandRock);
   noStroke();
   beginShape();
@@ -108,12 +97,10 @@ void drawIsland(float x, float y) {
     vertex(x + 50, y - 8);
     vertex(x + 65, y + 25);
   endShape(CLOSE);
-  // green vegetation on top
   fill(islandGrass);
   ellipse(x + 5, y - 20, 60, 28);
-  fill(#3D6B22);   // darker patch for depth
+  fill(#3D6B22);  
   ellipse(x - 8, y - 15, 30, 18);
-  // subtle shadow on water face
   fill(0, 0, 0, 30);
   beginShape();
     vertex(x + 45, y - 5);
@@ -124,7 +111,6 @@ void drawIsland(float x, float y) {
 
 void drawBoat(float x, float y) {
   noStroke();
-  // hull
   fill(boatHull);
   beginShape();
     vertex(x - 22, y);
@@ -132,7 +118,6 @@ void drawBoat(float x, float y) {
     vertex(x + 16, y + 9);
     vertex(x - 16, y + 9);
   endShape(CLOSE);
-  // gunwale line
   stroke(boatLine);
   strokeWeight(1.5);
   line(x - 22, y, x + 22, y);
@@ -140,11 +125,9 @@ void drawBoat(float x, float y) {
 }
 
 void drawCloud(float x, float y, float sz) {
-  // cool underside shadow
   fill(cloudShadow);
   ellipse(x,             y + sz * 0.18, sz * 1.1, sz * 0.35);
   ellipse(x + sz * 0.4,  y + sz * 0.25, sz * 0.8, sz * 0.30);
-  // bright white body
   fill(cloudWhite);
   ellipse(x,             y,             sz,        sz * 0.55);
   ellipse(x + sz * 0.38, y + sz * 0.08, sz * 0.78, sz * 0.50);
