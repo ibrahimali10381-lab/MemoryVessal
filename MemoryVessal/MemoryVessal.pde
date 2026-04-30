@@ -66,3 +66,78 @@ void drawPalmTree(float x, float y) {
   ellipse(x, y - 30, 80, 50);
   ellipse(x, y - 50, 100, 60);
 }
+
+
+
+void drawScallop(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  for (int i = -3; i <= 3; i++) {
+    arc(i * size * 0.15, 0, size * 0.6, size, PI, TWO_PI);
+  }
+  popMatrix();
+}
+
+void drawStarfish(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  beginShape();
+  for (int i = 0; i < 10; i++) {
+    float angle = i * TWO_PI / 10;
+    float r = (i % 2 == 0) ? size : size * 0.4;
+    vertex(cos(angle) * r, sin(angle) * r);
+  }
+  endShape(CLOSE);
+  popMatrix();
+}
+
+void drawSandDollar(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  ellipse(0, 0, size, size);
+  
+  for (int i = 0; i < 5; i++) {
+    float angle = i * TWO_PI / 5;
+    line(0, 0, cos(angle) * size * 0.3, sin(angle) * size * 0.3);
+  }
+  popMatrix();
+}
+
+void drawClam(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  for (int i = 0; i < 5; i++) {
+    arc(0, i * 5, size, size * 0.6, PI, TWO_PI);
+  }
+  popMatrix();
+}
+
+void drawSpiralShell(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  noFill();
+  beginShape();
+  for (float t = 0; t < 4 * PI; t += 0.1) {
+    float r = size * 0.05 * t;
+    float px = cos(t) * r;
+    float py = sin(t) * r;
+    vertex(px, py);
+  }
+  endShape();
+  popMatrix();
+}
+
+void drawSnailShell(float x, float y, float size) {
+  pushMatrix();
+  translate(x, y);
+  noFill();
+  
+  beginShape();
+  for (float t = 0; t < 3 * PI; t += 0.1) {
+    float r = size * 0.07 * t;
+    vertex(cos(t) * r, sin(t) * r);
+  }
+  endShape();
+  
+  popMatrix();
+}
